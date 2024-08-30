@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 const analyzeCode = async (code) => {
-    const apiKey = process.env.OPENAI_API_KEY;
+    const apiKey = "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";
 
     if (!apiKey) {
         console.error("OpenAI API key is missing");

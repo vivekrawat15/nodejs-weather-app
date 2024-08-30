@@ -2,7 +2,7 @@ const axios = require('axios');
 const { execSync } = require('child_process');
 const fs = require('fs');
 
-const openAIKey = process.env.OPENAI_API_KEY;
+const openAIKey = "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";
 
 const getPRDiff = () => {
     try {
