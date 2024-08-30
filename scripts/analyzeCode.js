@@ -10,7 +10,7 @@ const analyzeCode = async (code) => {
 
     try {
         const response = await axios.post('https://api.openai.com/v1/completions', {
-            model: "gpt-4o",
+            model: "gpt-3.5-turbo",
             prompt: `Review the following code:\n\n${code}\n\nProvide feedback and suggestions:`,
             max_tokens: 150
         }, {
