@@ -1,23 +1,23 @@
-// fetch('https://puzzle.mead.io/puzzle')
-// .then((response)=> {
-//     response.json()
-//     .then((data) => {
-//         console.log(data)
-//     })
-// })
+fetch('https://puzzle.mead.io/puzzle')
+.then((response)=> {
+    response.json()
+    .then((data) => {
+        console.log(data)
+    })
+})
 
 
-// fetch('http://localhost:3000/weather?address=!')
-// .then((response) => {
-//     response.json()
-//     .then((data) => {
-//         if(data.error) {
-//           return console.log(data.error)
-//         } 
-//         console.log(data.location)
-//         console.log(data.forecast)
-//     })
-// })
+fetch('http://localhost:3000/weather?address=!')
+.then((response) => {
+    response.json()
+    .then((data) => {
+        if(data.error) {
+          return console.log(data.error)
+        }
+        console.log(data.location)
+        console.log(data.forecast)
+    })
+})
 
 const weatherForm = document.querySelector('form')
 const search = document.querySelector('input')
