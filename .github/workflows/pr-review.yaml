@@ -11,8 +11,8 @@ jobs:
     steps:
       - name: Debug environment variables
         run: |
-          echo "OPENAI_API_KEY is ${{ variables.OPENAI_API_KEY }}"
-          echo "GITHUB_TOKEN is ${{ variables.GITHUB_TOKEN }}"
+          echo "OPENAI_API_KEY is ${{ secrets.OPENAI_API_KEY }}"
+          echo "GITHUB_TOKEN is ${{ secrets.GITHUB_TOKEN }}"
 
       - name: Debug environment variables
         run: printenv | sort
@@ -34,5 +34,5 @@ jobs:
       - name: Post AI-generated review
         run: node scripts/postReview.js
         env:
-          GITHUB_TOKEN: ${{ variables.GITHUB_TOKEN }}
-          OPENAI_API_KEY: ${{ variables.OPENAI_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
