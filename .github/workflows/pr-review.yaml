@@ -10,6 +10,10 @@ jobs:
 
     steps:
       - name: Debug environment variables
+        run: |
+          echo "OPENAI_API_KEY is ${{ secrets.OPENAI_API_KEY }}"
+
+      - name: Debug environment variables
         run: printenv | sort
 
       - name: Check out the code
