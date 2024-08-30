@@ -28,7 +28,7 @@ const analyzeCode = async (diff) => {
         const response = await axios.post(
             'https://api.openai.com/v1/completions',
             {
-                model: 'gpt-4o-turbo',
+                model: 'gpt-4o',
                 prompt: `Review the following code changes and provide detailed feedback:\n\n${diff}`,
                 max_tokens: 300,
                 temperature: 0.7,
