@@ -1,21 +1,47 @@
+# Apache License
+# Version 2.0, January 2004
+# Author: Eugene Tkachenko
+
+name: Pull Request ChatGPT review
+
 on:
   pull_request:
-    types: [opened, synchronize]
+    types: [opened, synchronize, reopened]
 
 jobs:
-  code_review_job:
+  chatgpt_reviewer:
     runs-on: ubuntu-latest
-    name: SAP Nexus Code Review
     steps:
-      - name: GenAI Code Review
-        uses: cirolini/genai-code-review@v2
+      - name: Checkout code
+        uses: actions/checkout@v4
         with:
-          openai_api_key: ${{ secrets.openai_api_key }}
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          github_pr_id: ${{ github.event.number }}
-          openai_model: "gpt-3.5-turbo" # optional
-          openai_temperature: 0.5 # optional
-          openai_max_tokens: 2048 # optional
-          mode: files # files or patch
-          language: en # optional, default is 'en'
-          custom_prompt: "Give a rating from 1 to 10 for this code:"
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install -r .ai/io/nerdythings/requirements.txt
+
+      - name: Run Reviewer Script
+        env:
+          GITHUB_HEAD_REF: ${{ github.head_ref }}
+          GITHUB_BASE_REF: ${{ github.base_ref }}
+          CHATGPT_KEY: ${{ secrets.CHATGPT_KEY }}
+          CHATGPT_MODEL: ${{ secrets.CHATGPT_MODEL }}
+          GITHUB_TOKEN: ${{ secrets.API_KEY }}
+          TARGET_EXTENSIONS: ${{ vars.TARGET_EXTENSIONS }}
+          REPO_OWNER: ${{ github.repository_owner }}
+          REPO_NAME: ${{ github.event.repository.name }}
+          PULL_NUMBER: ${{ github.event.number }}
+        run: |
+          python .ai/io/nerdythings/github_reviewer.py
+
+      - name: Upload result as an artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: AI-requests
+          path: output.txt
+          retention-days: 1
