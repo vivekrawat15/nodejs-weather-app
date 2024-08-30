@@ -6,14 +6,23 @@ const openAIKey = process.env.OPENAI_API_KEY;
 
 const getPRDiff = () => {
     try {
-        const diff = execSync('git diff origin/main').toString();
-        return diff;
+        // Fetch the main branch to make sure it's available locally
+        execSync('git fetch origin main');
+
+        // Check if the main branch exists locally
+        try {
+            const diff = execSync('git diff origin/main').toString();
+            return diff;
+        } catch {
+            console.log("No main branch found, comparing with the base branch instead.");
+            const diff = execSync('git diff HEAD~1').toString();
+            return diff;
+        }
     } catch (error) {
         console.error('Error getting PR diff:', error);
         process.exit(1);
     }
 };
-
 const analyzeCode = async (diff) => {
     try {
         const response = await axios.post(
