@@ -9,6 +9,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Debug environment variables
+        run: printenv | sort
+
       - name: Check out the code
         uses: actions/checkout@v3
 
