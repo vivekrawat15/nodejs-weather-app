@@ -1,0 +1,38 @@
+name: PR Review with OpenAI
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  pr_review:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Debug environment variables
+        run: |
+          echo "OPENAI_API_KEY is ${{ secrets.OPENAI_API_KEY }}"
+          echo "GITHUB_TOKEN is ${{ secrets.GITHUB_TOKEN }}"
+
+      - name: Debug environment variables
+        run: printenv | sort
+
+      - name: Check out the code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Analyze code with OpenAI
+        run: node scripts/analyzeCode.js
+
+      - name: Post AI-generated review
+        run: node scripts/postReview.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: "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"
