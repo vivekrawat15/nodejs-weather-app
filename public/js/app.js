@@ -46,3 +46,6 @@ weatherForm.addEventListener('submit', (e) => {
     })
 
 })
+
+
+some bad code added here
