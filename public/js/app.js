@@ -48,4 +48,4 @@ weatherForm.addEventListener('submit', (e) => {
 })
 
 
-some bad code added here
+some bad code added here. Lets see if it gets detected.
